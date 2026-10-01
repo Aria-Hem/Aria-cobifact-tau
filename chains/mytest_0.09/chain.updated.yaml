@@ -1,0 +1,278 @@
+theory:
+  camb:
+    version: 1.6.5
+    path: null
+    speed: 0.3
+    stop_at_error: true
+    extra_args:
+      kmax: 10
+      lens_potential_accuracy: 1
+    ignore_obsolete: false
+    external_primordial_pk: false
+    renames:
+      omegabh2: ombh2
+      omegach2: omch2
+      omegal: omega_de
+      omegak: omk
+      yhe: YHe
+      yheused: YHe
+      YpBBN: Y_p
+    input_params:
+    - As
+    - ns
+    - cosmomc_theta
+    - ombh2
+    - omch2
+    - mnu
+    - tau
+    output_params:
+    - H0
+    - omegam
+    - omega_de
+    - rdrag
+likelihood:
+  planck_2018_lowl.TT:
+    lmin: 2
+    lmax: 29
+    type: CMB
+    aliases:
+    - lowT
+    speed: -1
+    stop_at_error: false
+    version: null
+    input_params:
+    - A_planck
+    output_params: []
+  act_dr6_cmbonly.PlanckActCut:
+    path: null
+    dataset_file: plik_lite_v22.dataset
+    dataset_params:
+      use_cl: tt te ee
+      lmin_cuts: 0 0 0
+      lmax_cuts: 1000 600 600
+    aliases:
+    - plikHM_TTTEEE
+    speed: 200
+    type: CMB
+    stop_at_error: false
+    version: null
+    input_params:
+    - A_planck
+    output_params: []
+  act_dr6_cmbonly:
+    url: https://lambda.gsfc.nasa.gov/data/act/pspipe/sacc_files/
+    input_file: dr6_data_cmbonly.fits
+    data_folder: ACTDR6CMBonly
+    version: v1.0
+    ell_cuts:
+      TT:
+      - 600
+      - 6500
+      TE:
+      - 600
+      - 6500
+      EE:
+      - 600
+      - 6500
+    lmax_theory: 9000
+    type: []
+    speed: -1
+    stop_at_error: true
+    input_params:
+    - A_act
+    - P_act
+    output_params: []
+  act_dr6_lenslike:
+    lmax: 4000
+    mock: false
+    nsims_act: 792.0
+    nsims_planck: 400.0
+    no_like_corrections: false
+    no_actlike_cmb_corrections: false
+    lens_only: false
+    trim_lmax: 2998
+    variant: actplanck_baseline
+    apply_hartlap: true
+    limber: false
+    nz: 100
+    kmax: 10
+    zmax: null
+    scale_cov: null
+    varying_cmb_alens: false
+    version: null
+    act_cmb_rescale: false
+    act_calib: false
+    type: []
+    speed: -1
+    stop_at_error: true
+    input_params: []
+    output_params: []
+params:
+  logA:
+    prior:
+      min: 1.61
+      max: 3.91
+    ref:
+      dist: norm
+      loc: 3.05
+      scale: 0.001
+    proposal: 0.001
+    latex: \log(10^{10} A_\mathrm{s})
+    drop: true
+  As:
+    value: 'lambda logA: 1e-10*np.exp(logA)'
+    latex: A_\mathrm{s}
+    derived: true
+  ns:
+    prior:
+      min: 0.8
+      max: 1.2
+    ref:
+      dist: norm
+      loc: 0.965
+      scale: 0.004
+    proposal: 0.002
+    latex: n_\mathrm{s}
+  theta_MC_100:
+    prior:
+      min: 0.5
+      max: 10
+    ref:
+      dist: norm
+      loc: 1.04109
+      scale: 0.0004
+    proposal: 0.0002
+    latex: 100\theta_\mathrm{MC}
+    drop: true
+    renames: theta
+  cosmomc_theta:
+    value: 'lambda theta_MC_100: 1.e-2*theta_MC_100'
+    derived: false
+  H0:
+    latex: H_0
+    min: 20
+    max: 100
+    derived: true
+  ombh2:
+    prior:
+      min: 0.005
+      max: 0.1
+    ref:
+      dist: norm
+      loc: 0.0224
+      scale: 0.0001
+    proposal: 0.0001
+    latex: \Omega_\mathrm{b} h^2
+    renames:
+    - omegabh2
+  omch2:
+    prior:
+      min: 0.001
+      max: 0.99
+    ref:
+      dist: norm
+      loc: 0.12
+      scale: 0.001
+    proposal: 0.0005
+    latex: \Omega_\mathrm{c} h^2
+    renames:
+    - omegach2
+  omegam:
+    latex: \Omega_\mathrm{m}
+    derived: true
+  omegamh2:
+    derived: 'lambda omegam, H0: omegam*(H0/100)**2'
+    latex: \Omega_\mathrm{m} h^2
+  mnu:
+    value: 0.06
+  omega_de:
+    latex: \Omega_\Lambda
+    derived: true
+    renames:
+    - omegal
+  tau:
+    value: 0.09
+    latex: \tau_\mathrm{reio}
+  A:
+    derived: 'lambda As: 1e9*As'
+    latex: 10^9 A_\mathrm{s}
+  rdrag:
+    latex: r_\mathrm{d}
+    derived: true
+  H0rd:
+    derived: 'lambda rdrag, H0: rdrag*(H0/100)'
+    latex: H_0 r_\mathrm{d}
+  A_planck:
+    value: 'lambda A_act: A_act'
+    latex: A_\mathrm{Planck}
+    derived: true
+  A_act:
+    prior:
+      min: 0.5
+      max: 1.5
+    ref:
+      dist: norm
+      loc: 1.0
+      scale: 0.1
+    proposal: 0.003
+    latex: A_{\rm ACT}
+  P_act:
+    prior:
+      min: 0.9
+      max: 1.1
+    ref:
+      dist: norm
+      loc: 1.0
+      scale: 0.1
+    proposal: 0.03
+    latex: p_{\rm ACT}
+  chi2__CMB:
+    latex: \chi^2_\mathrm{CMB}
+    derived: true
+sampler:
+  mcmc:
+    sampler_type: mcmc
+    supports_periodic_params: true
+    burn_in: 0
+    max_tries: 1000
+    covmat: null
+    covmat_params: null
+    proposal_scale: 2.4
+    output_every: 60s
+    learn_every: 40d
+    temperature: 1
+    learn_proposal: true
+    learn_proposal_Rminus1_max: 2.0
+    learn_proposal_Rminus1_max_early: 30.0
+    learn_proposal_Rminus1_min: 0.0
+    max_samples: .inf
+    Rminus1_stop: 0.05
+    Rminus1_cl_stop: 0.2
+    Rminus1_cl_level: 0.95
+    Rminus1_single_split: 4
+    measure_speeds: true
+    oversample_power: 0.4
+    oversample_thin: true
+    drag: false
+    blocking:
+    - - 1
+      - - theta_MC_100
+        - ombh2
+        - omch2
+    - - 1
+      - - logA
+        - ns
+    - - 14
+      - - A_act
+    - - 18
+      - - P_act
+    callback_function: null
+    callback_every: null
+    seed: null
+    check_every: null
+    oversample: null
+    drag_limits: null
+    fallback_covmat_scale: 4
+    version: '3.6'
+output: chain
+version: '3.6'

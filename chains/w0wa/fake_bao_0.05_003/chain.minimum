@@ -1,0 +1,33 @@
+ -log(Like) = 192.1172907900437
+  chi-sq    = 384.2345815800874
+
+    1  2.241007403e-02   ombh2                                \Omega_\mathrm{b}h^2
+    2  1.213183341e-01   omch2                                \Omega_\mathrm{c}h^2
+    3  1.040580420e-02   cosmomc_theta                        \theta_\mathrm{MC}
+    4  3.039576035e+00   logA                                 \log(10^{10} A_\mathrm{s})
+    6  9.665262686e-01   ns                                   n_\mathrm{s}
+    7  5.095452318e-02   tau                                  \tau_\mathrm{reio}
+   20  9.995411984e-01   A_act                                A_{\rm ACT}
+   21  1.002036249e+00   P_act                                p_{\rm ACT}
+
+    8  0.06              mnu                                  mnu
+
+    5  2.089638203e-09   As                                   A_\mathrm{s}
+    9  3.235266317e-01   omegam                               \Omega_\mathrm{m}
+   10  8.449247060e-01   S8                                   S_8
+   11  6.680183394e+01   H0                                   H_0
+   12  1.040772061e+00   thetastar                            \theta_\star
+   13  8.136237522e-01   sigma8                               \sigma_8
+   14  2.458726007e-01   YHe                                  Y_\mathrm{He}
+   15  7.348162910e+00   zrei                                 z_\mathrm{reio}
+   16  1.090002085e+03   zstar                                z_\star
+   17  1.440714711e+02   rstar                                r_{s,\star}
+   18  1.060135889e+03   zdrag                                z_d
+   19  9.995411984e-01   A_planck                             A_\mathrm{Planck}
+   22  1.691237728e+01   chi2__BAO                            \chi^2_\mathrm{BAO}
+   23  2.469180208e+02   chi2__CMB                            \chi^2_\mathrm{CMB}
+   24  1.691237728e+01   chi2__bao.generic                    \chi^2_{\rm bao.generic}
+   25  2.299354574e+01   chi2__planck_2018_lowl.TT            \chi^2_{\rm planck\ 2018\ lowl.TT}
+   26  2.239244750e+02   chi2__act_dr6_cmbonly.PlanckActCut   \chi^2_{\rm act\ dr6\ cmbonly.PlanckActCut}
+   27  1.566138695e+02   chi2__act_dr6_cmbonly                \chi^2_{\rm act\ dr6\ cmbonly}
+   28  2.005214257e+01   chi2__act_dr6_lenslike               \chi^2_{\rm act\ dr6\ lenslike}

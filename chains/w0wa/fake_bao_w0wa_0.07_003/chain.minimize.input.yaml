@@ -1,0 +1,159 @@
+theory:
+  camb:
+    stop_at_error: false
+    extra_args:
+      dark_energy_model: ppf
+      kmax: 10
+      lens_potential_accuracy: 1
+      num_massive_neutrinos: 1
+      nnu: 3.044
+    params:
+      H0:
+        latex: H_0
+        derived: true
+      thetastar:
+        latex: \theta_\star
+        derived: true
+      sigma8:
+        latex: \sigma_8
+        derived: true
+      YHe:
+        latex: Y_\mathrm{He}
+        derived: true
+      zrei:
+        latex: z_\mathrm{reio}
+        derived: true
+      zstar:
+        latex: z_\star
+        derived: true
+      rstar:
+        latex: r_{s,\star}
+        derived: true
+      zdrag:
+        latex: z_d
+        derived: true
+likelihood:
+  bao.generic:
+    measurements_file: /home/aria-hemmatian/Desktop/test2/bao_fake_v2/myBAO_003_wN.dat
+    cov_file: /home/aria-hemmatian/Desktop/Um-project/bao_fake/cov/myBAO.cov
+  planck_2018_lowl.TT: null
+  act_dr6_cmbonly.PlanckActCut:
+    dataset_params:
+      use_cl: tt te ee
+      lmin_cuts: 0 0 0
+      lmax_cuts: 1000 600 600
+    params:
+      A_planck:
+        value: 'lambda A_act: A_act'
+        latex: A_\mathrm{Planck}
+  act_dr6_cmbonly:
+    stop_at_error: true
+  act_dr6_lenslike:
+    package_install: pip
+    lens_only: false
+    stop_at_error: true
+    lmax: 4000
+    variant: actplanck_baseline
+prior:
+  cal_dip_prior: 'lambda A_act: stats.norm.logpdf(A_act, loc=1.0, scale=0.003)'
+  w0wa_physical: 'lambda w, wa: 0 if (w + wa) < 0 else -np.inf'
+params:
+  ombh2:
+    prior:
+      min: 0.017
+      max: 0.027
+    ref:
+      dist: norm
+      loc: 0.02239
+      scale: 0.0021
+    proposal: 6.5e-05
+    latex: \Omega_\mathrm{b}h^2
+  omch2:
+    prior:
+      min: 0.09
+      max: 0.15
+    ref:
+      dist: norm
+      loc: 0.12
+      scale: 0.026
+    proposal: 0.0011
+    latex: \Omega_\mathrm{c}h^2
+  cosmomc_theta:
+    prior:
+      min: 0.0103
+      max: 0.0105
+    ref:
+      dist: norm
+      loc: 0.010417
+      scale: 6.7e-05
+    proposal: 1.0e-05
+    latex: \theta_\mathrm{MC}
+  logA:
+    prior:
+      min: 2.6
+      max: 3.5
+    ref:
+      dist: norm
+      loc: 3.064
+      scale: 0.24
+    proposal: 0.0036
+    latex: \log(10^{10} A_\mathrm{s})
+  As:
+    value: 'lambda logA: 1e-10*np.exp(logA)'
+    latex: A_\mathrm{s}
+    derived: true
+  ns:
+    prior:
+      min: 0.9
+      max: 1.1
+    ref:
+      dist: norm
+      loc: 0.9729
+      scale: 0.061
+    proposal: 0.0033
+    latex: n_\mathrm{s}
+  tau:
+    prior:
+      dist: norm
+      loc: 0.07
+      scale: 0.0073
+    ref:
+      dist: norm
+      loc: 0.0544
+      scale: 0.0073
+    latex: \tau_\mathrm{reio}
+  w:
+    prior:
+      min: -3.0
+      max: 1.0
+    ref:
+      dist: norm
+      loc: -0.9
+      scale: 0.05
+    proposal: 0.1
+    latex: w_0
+  wa:
+    prior:
+      min: -3.0
+      max: 2.0
+    ref:
+      dist: norm
+      loc: -0.1
+      scale: 0.1
+    proposal: 0.2
+    latex: w_a
+  mnu: 0.06
+  omegam:
+    latex: \Omega_\mathrm{m}
+  S8:
+    derived: 'lambda sigma8, omegam: sigma8*(omegam/0.3)**0.5'
+    latex: S_8
+sampler:
+  minimize:
+    method: bobyqa
+    ignore_prior: false
+    max_evals: 1000000
+    best_of: 8
+    confidence_for_unbounded: 0.9999995
+    seed: null
+output: chain

@@ -1,0 +1,127 @@
+theory:
+  camb:
+    version: 1.6.5
+    path: null
+    speed: 0.3
+    stop_at_error: false
+    extra_args:
+      dark_energy_model: ppf
+      num_massive_neutrinos: 1
+      nnu: 3.044
+    ignore_obsolete: false
+    external_primordial_pk: false
+    renames:
+      omegabh2: ombh2
+      omegach2: omch2
+      omegal: omega_de
+      omegak: omk
+      yhe: YHe
+      yheused: YHe
+      YpBBN: Y_p
+    input_params:
+    - H0
+    - ombh2
+    - omch2
+    output_params:
+    - omegam
+    - rdrag
+likelihood:
+  bao.generic:
+    measurements_file: /home/aria-hemmatian/Desktop/Um-project/bao_fake_v2/myBAO_000_wN.dat
+    cov_file: /home/aria-hemmatian/Desktop/Um-project/bao_fake/cov/myBAO.cov
+    invcov_file: /full/path/to/myBAO_inv.cov
+    rs_fid: null
+    speed: 2500
+    type: BAO
+    rs_rescale: null
+    prob_dist: null
+    redshift: null
+    observable_1: null
+    observable_2: null
+    observable_3: null
+    grid_file: null
+    stop_at_error: false
+    version: null
+    input_params: []
+    output_params: []
+  external_class:
+    type: []
+    speed: -1
+    stop_at_error: false
+    version: null
+    class: CMB_Compressd.CMB_compressed_fixed_zstar
+    python_path: /home/aria-hemmatian/cobaya-packages/data
+    input_params:
+    - H0
+    - ombh2
+    - omch2
+    output_params: []
+params:
+  H0:
+    prior:
+      min: 20
+      max: 100
+    ref:
+      dist: norm
+      loc: 67.8
+      scale: 2
+    proposal: 2
+    latex: H_0
+  ombh2:
+    prior:
+      max: 0.1
+      min: 0.005
+    ref:
+      dist: norm
+      loc: 0.0222
+      scale: 0.0005
+    proposal: 0.0004
+    latex: \Omega_\mathrm{b} h^2
+    renames:
+    - omegabh2
+  omch2:
+    prior:
+      max: 0.99
+      min: 0.001
+    ref:
+      dist: norm
+      loc: 0.12
+      scale: 0.003
+    proposal: 0.002
+    latex: \Omega_\mathrm{c} h^2
+    renames:
+    - omegach2
+  omegam:
+    latex: \Omega_\mathrm{m}
+    derived: true
+  omegamh2:
+    derived: 'lambda omegam, H0: omegam*(H0/100)**2'
+    latex: \Omega_\mathrm{m} h^2
+  rdrag:
+    latex: r_\mathrm{d}
+    derived: true
+  H0rd:
+    derived: 'lambda rdrag, H0: rdrag*(H0/100)'
+    latex: H_0 r_\mathrm{d}
+  chi2__BAO:
+    latex: \chi^2_\mathrm{BAO}
+    derived: true
+sampler:
+  minimize:
+    method: iminuit
+    ignore_prior: true
+    max_evals: 1e6d
+    best_of: 4
+    confidence_for_unbounded: 0.9999995
+    seed: null
+    override_scipy: null
+    override_bobyqa:
+      rhoend: 0.05
+    override_iminuit: null
+    covmat: null
+    covmat_params: null
+    version: null
+    supports_periodic_params: false
+    fallback_covmat_scale: 4
+output: chain
+version: '3.6'
